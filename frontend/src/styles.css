@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "tailwindcss/forms";
+@import "tailwindcss/typography";
+@import "tailwindcss/aspect-ratio";
+@import "tailwindcss/line-clamp";
