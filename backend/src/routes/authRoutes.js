@@ -1,17 +1,19 @@
-import express from "express";
-import { getAllTodos } from "../controllers/todoController.js";
-import { createTodo } from "../controllers/todoController.js";
-import { logout } from "../../../frontend/src/core/auth.js";
+import express from 'express';
+import {
+  loginUser,
+  logoutUser,
+  registerUser,
+} from '../controllers/authController.js';
 const todoRoute = express.Router();
 
 // Sample route for getting all todos
-todoRoute.get("/login", loginUser);
+todoRoute.post('/login', loginUser);
 
 // Sample route for creating a new todo
-todoRoute.post("/logout", logoutUser);
+todoRoute.post('/logout', logoutUser);
 
 // Sample route for creating a new todo
-todoRoute.post("/register", createUser);
+todoRoute.post('/register', registerUser);
 
 // Export the router
 export default todoRoute;
