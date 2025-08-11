@@ -1,9 +1,9 @@
-import db from '../DB/dbConnect.js';
-
+import { getDB } from "../DB/dbConnect.js";
+var db = getDB();
 export const findUserByUsername = async (username) => {
   const [rows] = await db
     .promise()
-    .query('SELECT * FROM userlogin WHERE username = ?', [username]);
+    .query("SELECT * FROM userlogin WHERE username = ?", [username]);
   return rows[0];
 };
 

@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { register } from '../core/auth';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { register } from "../core/auth";
 
 const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phone: '',
-    dob: '',
-    gender: '',
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    username: "",
+    confirmPassword: "",
+    phone: "",
+    dob: "",
+    gender: "",
     agree: false,
   });
 
@@ -22,43 +24,43 @@ const Register = () => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.name) newErrors.name = 'Name is required';
-    if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.password) newErrors.password = 'Password is required';
+    if (!formData.name) newErrors.name = "Name is required";
+    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.password) newErrors.password = "Password is required";
     if (formData.password && formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = "Password must be at least 6 characters";
     }
-    if (!formData.username) newErrors.username = 'Username is required';
+    if (!formData.username) newErrors.username = "Username is required";
     if (formData.username && formData.username.length < 3) {
-      newErrors.username = 'Username must be at least 3 characters';
+      newErrors.username = "Username must be at least 3 characters";
     }
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Confirm Password is required';
+      newErrors.confirmPassword = "Confirm Password is required";
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
     if (!formData.phone) {
-      newErrors.phone = 'Phone number is required';
+      newErrors.phone = "Phone number is required";
     } else if (!/^[6-9]\d{9}$/.test(formData.phone)) {
-      newErrors.phone = 'Enter a valid 10-digit Indian phone number';
+      newErrors.phone = "Enter a valid 10-digit Indian phone number";
     }
 
     if (!formData.dob) {
-      newErrors.dob = 'Date of birth is required';
+      newErrors.dob = "Date of birth is required";
     } else if (new Date(formData.dob) > new Date()) {
-      newErrors.dob = 'Date of birth cannot be in the future';
+      newErrors.dob = "Date of birth cannot be in the future";
     }
 
-    if (!formData.gender) newErrors.gender = 'Gender is required';
-    if (!formData.agree) newErrors.agree = 'You must agree to continue';
+    if (!formData.gender) newErrors.gender = "Gender is required";
+    if (!formData.agree) newErrors.agree = "You must agree to continue";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -73,7 +75,7 @@ const Register = () => {
 
     // Submit the form
     register(dataToSend);
-    navigate('/dashboard'); // or any other route
+    navigate("/dashboard"); // or any other route
   };
 
   return (
@@ -91,6 +93,20 @@ const Register = () => {
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
           />
           {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+        </div>
+        {/* Surname */}
+        <div>
+          <label className="block text-sm font-medium">Surname</label>
+          <input
+            name="surname"
+            type="text"
+            value={formData.surname}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+          />
+          {errors.surname && (
+            <p className="text-red-500 text-sm">{errors.surname}</p>
+          )}
         </div>
 
         {/* Email */}
@@ -110,7 +126,7 @@ const Register = () => {
         <div>
           <label className="block text-sm font-medium">Username</label>
           <input
-            name="name"
+            name="username"
             type="text"
             value={formData.username}
             onChange={handleChange}
@@ -189,7 +205,7 @@ const Register = () => {
                 type="radio"
                 name="gender"
                 value="Male"
-                checked={formData.gender === 'Male'}
+                checked={formData.gender === "Male"}
                 onChange={handleChange}
               />
               Male
@@ -199,7 +215,7 @@ const Register = () => {
                 type="radio"
                 name="gender"
                 value="Female"
-                checked={formData.gender === 'Female'}
+                checked={formData.gender === "Female"}
                 onChange={handleChange}
               />
               Female
