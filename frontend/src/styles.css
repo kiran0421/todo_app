@@ -1,8 +1,7 @@
 @import "tailwindcss";
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-@import "tailwindcss/forms";
-@import "tailwindcss/typography";
-@import "tailwindcss/aspect-ratio";
-@import "tailwindcss/line-clamp";
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}

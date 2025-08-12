@@ -11,7 +11,23 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+
+const allowedOrigins = ["http://localhost:5173", "http://localhost:3000"];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // Allow server-to-server or tools like Postman
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, origin);
+      }
+      return callback(new Error("CORS not allowed"), false);
+    },
+    credentials: true, // Required for cookies
+  })
+);
+
+app.options("*", cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

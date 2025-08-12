@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { login } from '../core/auth';
+import React, { useState } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { login } from "../core/auth";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
   const searchParams = new URLSearchParams(location.search);
-  const redirectPath = searchParams.get('redirect') || '/dashboard';
+  const redirectPath = searchParams.get("redirect") || "/dashboard";
 
   const handleLogin = () => {
     if (!username.trim() || !password.trim()) {
-      alert('Please enter both username and password');
+      alert("Please enter both username and password");
       return;
     } else {
       login(username, password);
@@ -22,7 +22,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="mx-auto flex max-w-sm items-center gap-x-4 mt-50 rounded-xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
       <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Login

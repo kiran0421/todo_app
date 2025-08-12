@@ -1,80 +1,77 @@
 // src/auth.js
-import axios from 'axios';
+import axios from "axios";
 export const isAuthenticated = () => {
-  return !!localStorage.getItem('user');
+  return !!localStorage.getItem("user");
 };
 
-export const login = async (username) => {
+export const login = async (username, password) => {
+  const data = {
+    username,
+    password,
+  };
   try {
-    const res = await axios.post(
-      'http://localhost:3000/api/auth/login',
-      {
-        username,
-        password,
-      },
-      {
-        withCredentials: true, // if you use cookies for auth
-      }
-    );
+    const res = await axios.post("http://localhost:3000/api/auth/login", data, {
+      withCredentials: true,
+    });
 
     if (res.status === 200) {
       // store auth state (token, flag, etc.)
-      localStorage.setItem('user', JSON.stringify(res.data.user));
+      localStorage.setItem("user", JSON.stringify(res.accessToken));
       return res.data.user;
     }
   } catch (err) {
-    alert('Login failed: ' + err.response?.data?.message || err.message);
+    alert("Login failed: " + err.response?.data?.message || err.message);
   }
 };
 
 export const logout = () => {
-  localStorage.removeItem('user');
+  localStorage.removeItem("user");
 };
 
 export const register = async (userData) => {
   try {
-    console.log('Registering user:', userData);
+    console.log("Registering user:", userData);
     const res = await axios.post(
-      'http://localhost:3000/api/auth/register',
+      "http://localhost:3000/api/auth/register",
       userData
     );
     if (res.status === 201) {
-      alert('Registration successful');
+      alert("Registration successful");
       return res.data;
     }
   } catch (err) {
-    alert('Registration failed: ' + err.response?.data?.message || err.message);
+    alert("Registration failed: " + err.response?.data?.message || err.message);
   }
 };
 
 export const getCurrentUser = () => {
-  const user = localStorage.getItem('user');
+  const user = localStorage.getItem("user");
   return user ? JSON.parse(user) : null;
 };
 export const forgotpassword = async (username, dob) => {
   try {
     const res = await axios.post(
-      'http://localhost:3000/api/auth/forgotPassword',
+      "http://localhost:3000/api/auth/forgotPassword",
       { username, dob }
     );
     if (res.status === 200) {
       return res.data;
     }
   } catch (err) {
-    alert('Error:' + err.response?.data?.message || err.message);
+    alert("Error:" + err.response?.data?.message || err.message);
   }
 };
 export const resetPassword = async (email) => {
   try {
     const res = await axios.post(
-      'http://localhost:3000/api/auth/resetPassword',
+      "http://localhost:3000/api/auth/resetPassword",
       { username, password }
     );
     if (res.status === 200) {
-      alert('Password reset link sent to your email');
+      alert("Password reset link sent to your email");
       return res.data;
     }
   } catch (err) {
-    alert('Error:' + err.response?.data?.message || err.message);
+    alert("Error:" + err.response?.data?.message || err.message);
   }
 };

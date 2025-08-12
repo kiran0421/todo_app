@@ -1,5 +1,7 @@
 import { registerUserService } from "../services/authService.js";
 import { findUserByUsername } from "../models/user.model.js";
+import { logRefreshToken } from "../models/user.model.js";
+import bcrypt from "bcrypt";
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -22,7 +24,7 @@ export const loginUser = async (req, res) => {
     // 1. Find user
     const user = await findUserByUsername(username);
     if (!user) return res.status(401).json({ message: "Invalid credentials" });
-
+    console.log("User found:", user);
     // 2. Compare password (hashed)
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
@@ -33,11 +35,14 @@ export const loginUser = async (req, res) => {
     const accessToken = generateAccessToken(payload);
     const refreshToken = generateRefreshToken({ id: user.id });
 
-    await logRefreshToken(user.id, refreshToken, req.ip);
+    await logRefreshToken(user.id, refreshToken);
 
     // 5. Respond with tokens
     res.status(200).json({
       message: "Login successful",
+      user: {
+        username: user.username,
+      },
       accessToken,
       refreshToken,
     });
